@@ -1,0 +1,156 @@
+﻿<head>
+	<title>Perimeter Generator</title>
+
+	<style>
+		h1 {
+			text-align: center;
+		}
+
+		.shape-select {
+			margin: 20px auto;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			color: darkblue;
+			font-weight: bold;
+		}
+
+		.input-fields {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 20px;
+			color: darkblue;
+			font-weight: bold;
+		}
+
+		label {
+			margin-top: -1px;
+		}
+
+		input[type="number"] {
+			width: 100px;
+		}
+
+		button {
+			margin-top: 20px;
+		}
+
+		.perimeter {
+			margin: 20px auto;
+			border: 2px solid black;
+			height: 100px;
+			width: 500px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.perimeter-result {
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		#braille-output {
+			margin: 0 auto;
+			text-align: center;
+			margin: 20px auto;
+			font-size: 40px;
+			line-height: 1;
+			color: darkblue;
+		}
+
+		#braille-output,
+		button {
+			display: block;
+			margin: 20px auto;
+		}
+
+
+
+	</style>
+
+</head>
+<body>
+	<h1 style="color: darkblue;">Perimeter Generator</h1>
+	<div class="shape-select">
+		<label for="shape-select">Select a Shape:</label>
+		<select id="shape-select">
+			<option value="">-- Select a Shape --</option>
+			<option value="square">Square</option>
+			<option value="rectangle">Rectangle</option>
+			<option value="circle">Circle</option>
+		</select>
+	</div>
+	<div class="input-fields">
+		<label for="side-length">Side Length:</label>
+		<input type="number" id="side-length">
+		<label for="center-x">Center X Coordinate:</label>
+		<input type="number" id="center-x">
+		<label for="center-y">Center Y Coordinate:</label>
+		<input type="number" id="center-y">
+		<button id="generate-perimeter">Generate Perimeter</button>
+	</div>
+	<div class="perimeter"></div>
+	<button onclick="convertToBraille()">Convert to Braille</button>
+	<div id="braille-output"></div>
+
+	<script>
+		const shapeSelect = document.getElementById("shape-select");
+		const sideLengthInput = document.getElementById("side-length");
+		const centerXInput = document.getElementById("center-x");
+		const centerYInput = document.getElementById("center-y");
+		const generatePerimeterButton = document.getElementById("generate-perimeter");
+		const perimeterDiv = document.querySelector(".perimeter");
+
+		generatePerimeterButton.addEventListener("click", generatePerimeter);
+
+		function generatePerimeter() {
+			const shape = shapeSelect.value;
+			const sideLength = parseInt(sideLengthInput.value);
+			const centerX = parseInt(centerXInput.value);
+			const centerY = parseInt(centerYInput.value);
+
+			let perimeter;
+
+			switch (shape) {
+				case "square":
+					perimeter = sideLength * 4;
+					break;
+				case "rectangle":
+					const width = sideLength;
+					const height = sideLength * 2;
+					perimeter = (width + height) * 2;
+					break;
+				case "circle":
+					perimeter = 2 * Math.PI * sideLength;
+					break;
+				default:
+					perimeter = 0;
+					break;
+			}
+			perimeterDiv.innerHTML = `<p class="perimeter-result" style="color: darkblue;">The perimeter of the ${shape} is ${perimeter} units.</p>`;
+
+
+			//perimeterDiv.innerHTML = `<p style="color: darkblue;">The perimeter of the ${shape} is ${perimeter} units.</p>`;
+		}
+		function convertToBraille() {
+			const shapeSelect = document.getElementById("shape-select");
+			const selectedShape = shapeSelect.value;
+			let braillePattern = "";
+			switch (selectedShape) {
+				case "circle":
+					braillePattern = "⠡";
+					break;
+				case "square":
+					braillePattern = "⠿";
+					break;
+				case "triangle":
+					braillePattern = "⠯";
+					break;
+			}
+			document.getElementById("braille-output").textContent = braillePattern;
+		}
+	</script>
+</body>

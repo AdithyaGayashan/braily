@@ -1,0 +1,33 @@
+
+
+html {
+  font-size: 14px;
+}
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.display-4 {
+    margin-top: 136px;
+    font-size: 76px;
+    font-weight: bold;
+    color: darkblue;
+}
+
+.display-5 {
+    font-size: 20px;
+    
+    color: black;
+}
+
+
+body {
+    margin-bottom: 60px;
+    background-image: url("braille-reader-1.webp");
+    background-position: center;
+    background-size: 1500px 900px;
+    color:aliceblue;
+}

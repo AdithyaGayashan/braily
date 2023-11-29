@@ -1,0 +1,153 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<head>
+    <title>Braille Converter</title>
+    <meta charset="UTF-8">
+    <style>
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: darkblue;
+        }
+
+        input[type="text"],
+        textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: darkblue;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #1e1e30;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #1e2e45;
+            }
+
+        .output-container {
+            margin-top: 20px;
+            font-weight: bold;
+            color: darkblue;
+        }
+
+        .dot-count {
+            margin-top: 10px;
+            font-weight: bold;
+            color: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: darkblue;"> Braille Converter</h1>
+    <form>
+        <label for="input-text">English Text</label>
+        <input type="text" id="input-text" />
+
+        <button type="button" onclick="convert()">Convert</button>
+
+        <div class="output-container">
+            <label for="output-text">Braille Code</label>
+            <textarea id="output-text" rows="3" readonly></textarea>
+
+            <div class="dot-count">Dot Count: <span id="dot-count"></span></div>
+        </div>
+    </form>
+
+    <script>
+        function convert() {
+            const englishText = document.getElementById("input-text").value;
+            const brailleText = englishText.split("").map(convertCharacterToBraille).join("");
+            const dotCount = countDots(brailleText);
+            document.getElementById("output-text").value = brailleText;
+            document.getElementById("dot-count").innerText = dotCount;
+        }
+
+        function convertCharacterToBraille(char) {
+            switch (char.toLowerCase()) {
+                case "a":
+                    return "⠁";
+                case "b":
+                    return "⠃";
+                case "c":
+                    return "⠉";
+                case "d":
+                    return "⠙";
+                case "e":
+                    return "⠑";
+                case "f":
+                    return "⠋";
+                case "g":
+                    return "⠛";
+                case "h":
+                    return "⠓";
+                case "i":
+                    return "⠊";
+                case "j":
+                    return "⠚";
+                case "k":
+                    return "⠅";
+                case "l":
+                    return "⠇";
+                case "m":
+                    return "⠍";
+                case "n":
+                    return "⠝";
+                case "o":
+                    return "⠕";
+                case "p":
+                    return "⠏";
+                case "q":
+                    return "⠟";
+                case "r":
+                    return "⠗";
+                case "s":
+                    return "⠎";
+                case "t":
+                    return "⠞";
+                case "u":
+                    return "⠥";
+                case "v":
+                    return "⠧";
+                case "w":
+                    return "⠺";
+                case "x":
+                    return "⠭";
+                case "y":
+                    return "⠽";
+                case "z":
+                    return "⠵";
+                case " ":
+                    return " ";
+                default:
+                    return char;
+            }
+        }
+        function countDots(braille) {
+            const dotCount = [...braille].reduce((total, dot) => {
+                if (dot === " ") return total;
+                const charCode = dot.charCodeAt(0) - 10240;
+                const charDots = Array.from(charCode.toString(2)).reduce(
+                    (count, bit) => count + (bit === "1" ? 1 : 0),
+                    0
+                );
+                return total + charDots;
+            }, 0);
+            return dotCount;
+        }
+
+    </script>
+</body>
+
+
